@@ -25,3 +25,14 @@ Assuming that project1 and project2 are built by the same ci system you will wan
 
 Hudson and Jenkins are currently supported server types.
 
+Setup
+-----
+
+Your CI server should require authentication so first you will need to get hold of the API token availalbe from the server on your account profile page.
+
+ci self configures when run in a project file and no configuration can be found.
+
+<pre>
+> ci
+</pre>
+
