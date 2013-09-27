@@ -45,8 +45,6 @@ namespace ci {
             
             boost::property_tree::read_json(ss, pt);
             
-            std::cout << "server " <<                 pt.get<std::string>("server.url") << std::endl;
-            
             return {
                 pt.get<std::string>("server.type"),
                 pt.get<std::string>("server.url"),
