@@ -11,3 +11,11 @@ all	:	ci
 
 ci	:	src/*.cpp src/*.hpp
 	clang++ -g -O1 -o ci -std=c++11 -Xclang "-stdlib=libc++" -Xlinker -lc++ src/*.cpp $(BOOST_LIBS)
+
+
+dist:
+	mkdir dist
+	cp ci dist
+	hdiutil create /tmp/tmp.dmg -ov -volname "CIInstall" -fs HFS+ -srcfolder "/dist" 
+	hdiutil convert /tmp/tmp.dmg -format UDZO -o ci-install.dmg
+
