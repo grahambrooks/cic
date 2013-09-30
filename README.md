@@ -19,18 +19,22 @@ projects
        `- project2
 </pre>
 
-Assuming that project1 and project2 are built by the same ci system you will want to define that connection by having a .ci file in the projects folder. Optionally you can define a .ci file in the project folder so that ci only checks the the builds relevant to that project.
+Assuming that project1 and project2 are built by the same ci system you will want to define that connection by having a .ci file in the projects folder.
 
 .ci files are currently in json format and should not be checked in to version control because they contain continuous integration server credentials.
 
+<pre>
+{
+    "server" : {
+	"type" : "jenkins",
+	"url" : "http://jenkins.example.com",
+	"username" : "graham@grahambrooks.com",
+	"password" : "my password"
+    }
+}
+</pre>
+
 Hudson and Jenkins are currently supported server types.
-
-Setup
------
-
-Your CI server should require authentication so first you will need to get hold of the API token availalbe from the server on your account profile page.
-
-ci self configures when run in a project file and no configuration can be found.
 
 <pre>
 > ci

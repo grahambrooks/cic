@@ -47,12 +47,36 @@ namespace ci {
                             {
                                 assert(v.first.empty());
 
-                                std::string color = v.second.get<std::string>("color");
+                                print_build(v);
 
-                                if (color == "blue") std::cout << "\x1b[32m"; else std::cout << "\x1b[31m";
-
-                                std::cout << v.second.get<std::string>("name") << ": " << v.second.get<std::string>("color") << "\x1b[0m" << std::endl;
                             }
+        }
+
+        static void print_build(boost::property_tree::ptree::value_type &v) {
+
+            std::cout << v.second.get<std::string>("name") << ": ";
+
+            std::string color = v.second.get<std::string>("color");
+            if (color.find("blue") != std::string::npos) {
+                std::cout << "\x1b[32m";
+
+                if (color.find("anime") != std::string::npos) {
+                    std::cout << "building";
+                } else {
+                    std::cout << "waiting";
+                }
+
+            } else {
+                std::cout << "\x1b[31m";
+
+                if (color.find("anime") != std::string::npos) {
+                    std::cout << "fixing";
+                } else {
+                    std::cout << "broken";
+                }
+            }
+
+            std::cout << "\x1b[0m" << std::endl;
         }
 
         static size_t callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
@@ -66,11 +90,14 @@ namespace ci {
 
             curl = curl_easy_init();
             if (curl) {
-                curl_easy_setopt(curl, CURLOPT_URL, config.server_url.c_str());
+                curl_easy_setopt(curl, CURLOPT_URL, (config.server_url + "/api/json").c_str());
 
                 curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-                curl_easy_setopt(curl, CURLOPT_USERNAME, config.username.c_str());
-                curl_easy_setopt(curl, CURLOPT_PASSWORD, config.password.c_str());
+
+                if (config.requires_authentication()) {
+                    curl_easy_setopt(curl, CURLOPT_USERNAME, config.username.c_str());
+                    curl_easy_setopt(curl, CURLOPT_PASSWORD, config.password.c_str());
+                }
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &callback);
 
                 res = curl_easy_perform(curl);
