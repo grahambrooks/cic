@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="ci : Continuous integration console tool" />
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>ci by grahambrooks</title>
+    <title>ci</title>
   </head>
 
   <body>
 
-    <header>
-      <div class="container">
-        <h1>ci</h1>
-        <h2>Continuous integration console tool</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/grahambrooks/ci">View on GitHub</a>
 
-        <section id="downloads">
-          <a href="https://github.com/grahambrooks/ci/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/grahambrooks/ci/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/grahambrooks/ci" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+          <h1 id="project_title">ci</h1>
+          <h2 id="project_tagline">Continuous integration console tool</h2>
 
-    <div class="container">
-      <section id="main_content">
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/grahambrooks/ci/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/grahambrooks/ci/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h3>
 <a name="welcome-to-ci" class="anchor" href="#welcome-to-ci"><span class="octicon octicon-link"></span></a>Welcome to ci</h3>
 
 <p>ci is a command line tool that displays the status of your jenkins or hudson builds.</p>
+
+<h3>
+<a name="building" class="anchor" href="#building"><span class="octicon octicon-link"></span></a>Building</h3>
+
+<p>ci is written in C++11 and depends on libcurl and boost. If you are using homebrew you will need to build boost with the --with-c++11 option. I have had a few problems with this on some machines so a compiled binary can be found here: <a href="https://github.com/grahambrooks/ci/releases/download/0.0.1/ci-install.dmg">https://github.com/grahambrooks/ci/releases/download/0.0.1/ci-install.dmg</a></p>
       </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ci maintained by <a href="https://github.com/grahambrooks">grahambrooks</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
     </div>
 
               <script type="text/javascript">
@@ -45,6 +61,7 @@
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
