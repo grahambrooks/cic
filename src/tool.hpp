@@ -10,22 +10,19 @@
 namespace ci {
     class tool {
     public:
-
         int run() {
             std::cout << "ci v0.0.1 - continuous integration command line tool" << std::endl;
 
-            auto config_files = find_config(boost::filesystem::current_path());
+            boost::filesystem::path current_path = boost::filesystem::current_path();
+            std::list<boost::filesystem::path>  config_files;
+
+            find_config_files_on_path(current_path, config_files);
 
             if (config_files.size() == 0) {
-                std::cerr << "No configuration found in current path " << boost::filesystem::current_path() << std::endl;
+                std::cerr << "No configuration found in current path " << current_path << std::endl;
                 return 1;
             } else {
-                ci::config runtime_config;
-
-
-                for (auto c : config_files) {
-                    runtime_config = runtime_config.merge(ci::config::load(c));
-                }
+                config runtime_config = read_configuration(config_files);
 
                 if (!runtime_config.is_valid()) {
                     std::cerr << "Configuration not complete please check your .ci files" << std::endl;
@@ -37,19 +34,27 @@ namespace ci {
             return 0;
         }
 
+        config read_configuration(std::list<boost::filesystem::path> config_files) {
+            config runtime_config;
+
+            for (auto c : config_files) {
+                runtime_config = runtime_config.merge(config::load(c));
+            }
+            return runtime_config;
+        }
+
         static void parse_builds(char *buffer, size_t received) {
             boost::property_tree::ptree pt;
             std::stringstream ss(buffer);
 
             boost::property_tree::read_json(ss, pt);
 
-            BOOST_FOREACH(boost::property_tree::ptree::value_type & v, pt.get_child("jobs"))
-                            {
-                                assert(v.first.empty());
+            BOOST_FOREACH(boost::property_tree::ptree::value_type & v, pt.get_child("jobs")) {
+                        assert(v.first.empty());
 
-                                print_build(v);
+                        print_build(v);
 
-                            }
+                    }
         }
 
         static void print_build(boost::property_tree::ptree::value_type &v) {
@@ -110,13 +115,10 @@ namespace ci {
             }
         }
 
-        std::list<boost::filesystem::path> find_config(boost::filesystem::path path) {
-            std::list<boost::filesystem::path> result;
-
+        void find_config_files_on_path(boost::filesystem::path path, std::list<boost::filesystem::path>& result) {
             if (boost::filesystem::is_regular(path)) {
                 path = path.parent_path();
             }
-
 
             do {
                 if (boost::filesystem::exists(path / ".ci")) {
@@ -124,7 +126,6 @@ namespace ci {
                 }
                 path = path.parent_path();
             } while (path.has_parent_path());
-            return result;
         }
     };
 }
