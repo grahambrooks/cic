@@ -28,6 +28,7 @@
 /* Begin PBXFileReference section */
 		B6374101E15EDF5047B86487 /* ci.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ci.1; sourceTree = "<group>"; };
 		B63743EBB2E8CC45B6EF7D65 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B63747A93366CAD504846670 /* http.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = http.hpp; sourceTree = "<group>"; };
 		B6374F0ED939BA60C20DFCDD /* ci */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ci; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF5629C817F523AD00779261 /* tool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tool.hpp; sourceTree = "<group>"; };
 		BF5629C917F5266800779261 /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_filesystem-mt.a"; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 				B63743EBB2E8CC45B6EF7D65 /* main.cpp */,
 				BF5629C817F523AD00779261 /* tool.hpp */,
 				B6374101E15EDF5047B86487 /* ci.1 */,
+				B63747A93366CAD504846670 /* http.hpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
