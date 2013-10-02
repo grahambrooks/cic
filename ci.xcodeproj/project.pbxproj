@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B63747D01BE205ED45B42C3B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63743EBB2E8CC45B6EF7D65 /* main.cpp */; };
+		BF06C9A917FC7AA4002F6A46 /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5629C917F5266800779261 /* libboost_filesystem-mt.a */; };
+		BF06C9AA17FC7AA4002F6A46 /* libboost_system-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD8408217F89EC600BA0DC4 /* libboost_system-mt.a */; };
+		BF06C9AC17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */; };
+		BF06C9AF17FC7AF0002F6A46 /* ci_config_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF06C9AD17FC7AF0002F6A46 /* ci_config_test.cpp */; };
+		BF06C9B017FC7AF0002F6A46 /* test_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF06C9AE17FC7AF0002F6A46 /* test_main.cpp */; };
 		BF5629CF17F530D700779261 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5629CE17F530D700779261 /* libcurl.dylib */; };
 		BFD8408117F89E9000BA0DC4 /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5629C917F5266800779261 /* libboost_filesystem-mt.a */; };
 		BFD8408317F89EC600BA0DC4 /* libboost_system-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD8408217F89EC600BA0DC4 /* libboost_system-mt.a */; };
@@ -23,6 +28,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		BF06C99E17FC7A50002F6A46 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +44,10 @@
 		B63743EBB2E8CC45B6EF7D65 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B63747A93366CAD504846670 /* http.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = http.hpp; sourceTree = "<group>"; };
 		B6374F0ED939BA60C20DFCDD /* ci */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ci; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF06C9A017FC7A50002F6A46 /* citest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = citest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_unit_test_framework-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_unit_test_framework-mt.a"; sourceTree = "<group>"; };
+		BF06C9AD17FC7AF0002F6A46 /* ci_config_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ci_config_test.cpp; path = test/ci_config_test.cpp; sourceTree = SOURCE_ROOT; };
+		BF06C9AE17FC7AF0002F6A46 /* test_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test_main.cpp; path = test/test_main.cpp; sourceTree = SOURCE_ROOT; };
 		BF5629C817F523AD00779261 /* tool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tool.hpp; sourceTree = "<group>"; };
 		BF5629C917F5266800779261 /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_filesystem-mt.a"; sourceTree = "<group>"; };
 		BF5629CD17F52B5B00779261 /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
@@ -48,15 +66,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BF06C99D17FC7A50002F6A46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF06C9AC17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a in Frameworks */,
+				BF06C9A917FC7AA4002F6A46 /* libboost_filesystem-mt.a in Frameworks */,
+				BF06C9AA17FC7AA4002F6A46 /* libboost_system-mt.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		B6374443B7259EF6A7DB80E8 = {
 			isa = PBXGroup;
 			children = (
+				BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */,
 				BFD8408217F89EC600BA0DC4 /* libboost_system-mt.a */,
 				BF5629CE17F530D700779261 /* libcurl.dylib */,
 				BF5629C917F5266800779261 /* libboost_filesystem-mt.a */,
+				BF06C9A117FC7A50002F6A46 /* citest */,
 				B63748E5B4DBF9BD109C159F /* Products */,
 				B63749C8C90FE85F504AFF16 /* src */,
 			);
@@ -66,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				B6374F0ED939BA60C20DFCDD /* ci */,
+				BF06C9A017FC7A50002F6A46 /* citest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +111,15 @@
 				B63747A93366CAD504846670 /* http.hpp */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		BF06C9A117FC7A50002F6A46 /* citest */ = {
+			isa = PBXGroup;
+			children = (
+				BF06C9AD17FC7AF0002F6A46 /* ci_config_test.cpp */,
+				BF06C9AE17FC7AF0002F6A46 /* test_main.cpp */,
+			);
+			path = citest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,6 +140,23 @@
 			name = ci;
 			productName = ci;
 			productReference = B6374F0ED939BA60C20DFCDD /* ci */;
+			productType = "com.apple.product-type.tool";
+		};
+		BF06C99F17FC7A50002F6A46 /* citest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF06C9A817FC7A50002F6A46 /* Build configuration list for PBXNativeTarget "citest" */;
+			buildPhases = (
+				BF06C99C17FC7A50002F6A46 /* Sources */,
+				BF06C99D17FC7A50002F6A46 /* Frameworks */,
+				BF06C99E17FC7A50002F6A46 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = citest;
+			productName = citest;
+			productReference = BF06C9A017FC7A50002F6A46 /* citest */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -123,6 +180,7 @@
 			projectRoot = "";
 			targets = (
 				B637476AF1495821C6CE3D80 /* ci */,
+				BF06C99F17FC7A50002F6A46 /* citest */,
 			);
 		};
 /* End PBXProject section */
@@ -133,6 +191,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B63747D01BE205ED45B42C3B /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF06C99C17FC7A50002F6A46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF06C9AF17FC7AF0002F6A46 /* ci_config_test.cpp in Sources */,
+				BF06C9B017FC7AF0002F6A46 /* test_main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +322,36 @@
 			};
 			name = Debug;
 		};
+		BF06C9A617FC7A50002F6A46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/boost/1.54.0/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		BF06C9A717FC7A50002F6A46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/boost/1.54.0/lib,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -275,6 +372,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		BF06C9A817FC7A50002F6A46 /* Build configuration list for PBXNativeTarget "citest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF06C9A617FC7A50002F6A46 /* Release */,
+				BF06C9A717FC7A50002F6A46 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
