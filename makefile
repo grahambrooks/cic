@@ -24,8 +24,8 @@ all	:	ci test
 code :	$(objects) $(BUILD)/main.o
 	c++ $^ -o $@ $(LIBS)
 
-ci	:	src/*.cpp src/*.hpp
-	clang++ -g -O1 -o ci -std=c++11 -Xclang "-stdlib=libc++" -lc++ src/*.cpp $(BOOST_LIBS)
+ci	:	$(SRC)/*.cpp $(SRC)/*.hpp
+	clang++ -g -O1 -o $@ -std=c++11 -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(BOOST_LIBS)
 
 
 test: citest
@@ -52,8 +52,8 @@ citest: $(objects) $(test_objects) $(BUILD)/test_main.o
 	c++ $^ -o $@ $(BOOST_LIBS) $(TEST_LIBS)
 
 $(BUILD)/%.o : $(TEST_SRC)/%.cpp
-	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -lc++ -I src/cpp -c $< -I$(SRC) -o $@
+	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I src/cpp -c $< -I$(SRC) -o $@
 
 $(BUILD)/%.o : $(SRC)/%.cpp $(SRC)/%.hpp
-	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -lc++ -I src/cpp:/usr/local/include -c $< -I/src/cpp -o $@
+	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I src/cpp:/usr/local/include -c $< -I/src/cpp -o $@
 

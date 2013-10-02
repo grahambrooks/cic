@@ -13,7 +13,7 @@ namespace ci {
     class tool {
     public:
         int run() {
-            std::cout << "ci v0.0.1 - continuous integration command line tool" << std::endl;
+            std::cout << "ci v0.0.2 - continuous integration command line tool" << std::endl;
 
             boost::filesystem::path current_path = boost::filesystem::current_path();
             std::list<boost::filesystem::path> config_files;
