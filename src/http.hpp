@@ -42,6 +42,7 @@ namespace ci {
                 curl_easy_cleanup(curl);
 
             }
+
             return collector;
         }
     };

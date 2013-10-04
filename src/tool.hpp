@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include <list>
+#include <map>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -45,22 +46,21 @@ namespace ci {
             return runtime_config;
         }
 
-        void parse_builds(std::string buffer) {
+        void parse_builds(std::string buffer, config &c) {
             boost::property_tree::ptree pt;
             std::stringstream ss(buffer);
 
             boost::property_tree::read_json(ss, pt);
+            for (auto v : pt.get_child("jobs")) {
+                assert(v.first.empty());
 
-            BOOST_FOREACH(boost::property_tree::ptree::value_type & v, pt.get_child("jobs")) {
-                        assert(v.first.empty());
-
-                        print_build(v);
-
-                    }
+                print_build(v, c);
+            }
         }
 
-        void print_build(boost::property_tree::ptree::value_type &v) {
+        void print_build(boost::property_tree::ptree::value_type &v, config &c) {
 
+            auto print_build_summary = false;
             std::cout << v.second.get<std::string>("name") << ": ";
 
             std::string color = v.second.get<std::string>("color");
@@ -81,31 +81,110 @@ namespace ci {
                 } else {
                     std::cout << "broken";
                 }
+
+                print_build_summary = true;
             }
 
             std::cout << "\x1b[0m" << std::endl;
-        }
 
+            if (print_build_summary) {
 
-        void print_status(ci::config &config) {
-            HTTP client;
+                HTTP client;
 
-            auto response = client.get(config.server_url + "/api/json", config.username, config.password);
+                auto response = client.get(v.second.get<std::string>("url") + "api/json?pretty=true", c.username, c.password);
 
-            parse_builds(response);
-        }
+                boost::property_tree::ptree job_tree;
+                std::stringstream ss(response);
 
-        void find_config_files_on_path(boost::filesystem::path path, std::list<boost::filesystem::path> &result) {
-            if (boost::filesystem::is_regular(path)) {
-                path = path.parent_path();
+                boost::property_tree::read_json(ss, job_tree);
+
+                auto last_build_url = job_tree.get<std::string>("lastBuild.url");
+
+                boost::property_tree::ptree last_build;
+                auto last_build_data = client.get(last_build_url + "api/json?pretty=true", c.username, c.password);
+                std::stringstream lbss(last_build_data);
+
+                boost::property_tree::read_json(lbss, last_build);
+
+                std::cout << std::endl;
+
+                auto actions = last_build.get_child("actions");
+
+                auto second_only = [](const boost::property_tree::ptree::value_type &vt) -> void {
+                    std::cout << vt.first << ": " << vt.second.data() << std::endl;
+                };
+
+                std::map<std::string, std::function<void (const boost::property_tree::ptree::value_type &)> > x = {
+                        {
+                                "shortDescription",
+                [](const boost::property_tree::ptree::value_type &vt) -> void {
+                    std::cout << vt.second.data() << std::endl;
+                }
+            },
+            {
+                "userId",
+                        [](const boost::property_tree::ptree::value_type &vt) -> void {
+                            std::cout << "User Id: " << vt.second.data() << std::endl;
+                        }
+            },
+            {
+                "userName",
+                        [](const boost::property_tree::ptree::value_type &vt) -> void {
+                            std::cout << "User : " << vt.second.data() << std::endl;
+                        }
+            },
+            {
+                "claimedBy",
+                        [](const boost::property_tree::ptree::value_type &vt) -> void {
+                            std::cout << "Claimed by: " << vt.second.data() << std::endl;
+                        }
             }
 
-            do {
-                if (boost::filesystem::exists(path / ".ci")) {
-                    result.push_front(path / ".ci");
-                }
-                path = path.parent_path();
-            } while (path.has_parent_path());
+        };
+
+        print_tree(actions, x,
+        1);
+    }
+
+}
+
+void print_tree(boost::property_tree::ptree &pt, std::map<std::string, std::function<void (const boost::property_tree::ptree::value_type &)> > &x, int indent) {
+
+    for (auto v : pt) {
+
+        if (x.find(v.first) != x.end()) {
+            for (auto c = 0; c < indent; c++) {
+                std::cout << "   ";
+            }
+
+            x[v.first](v);
         }
-    };
+
+        print_tree(v.second, x, 0);
+    }
+
+}
+
+void print_status(ci::config &config) {
+    HTTP client;
+
+    auto response = client.get(config.server_url + "/api/json", config.username, config.password);
+
+    parse_builds(response, config);
+}
+
+void find_config_files_on_path(boost::filesystem::path path, std::list<boost::filesystem::path> &result) {
+    if (boost::filesystem::is_regular(path)) {
+        path = path.parent_path();
+    }
+
+    do {
+        if (boost::filesystem::exists(path / ".ci")) {
+            result.push_front(path / ".ci");
+        }
+        path = path.parent_path();
+    } while (path.has_parent_path());
+}
+
+};
 }
