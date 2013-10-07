@@ -89,7 +89,7 @@ namespace ci {
 
             if (print_build_summary) {
 
-                HTTP client;
+                HTTP::curl_client client;
 
                 auto response = client.get(v.second.get<std::string>("url") + "api/json?pretty=true", c.username, c.password);
 
@@ -166,7 +166,7 @@ void print_tree(boost::property_tree::ptree &pt, std::map<std::string, std::func
 }
 
 void print_status(ci::config &config) {
-    HTTP client;
+    HTTP::curl_client client;
 
     auto response = client.get(config.server_url + "/api/json", config.username, config.password);
 

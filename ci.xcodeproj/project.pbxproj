@@ -40,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4205D7FB17FF48C800C99FBE /* jenkins.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jenkins.hpp; sourceTree = "<group>"; };
 		B6374101E15EDF5047B86487 /* ci.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ci.1; sourceTree = "<group>"; };
 		B63743EBB2E8CC45B6EF7D65 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B63747A93366CAD504846670 /* http.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = http.hpp; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		B63749C8C90FE85F504AFF16 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4205D7FB17FF48C800C99FBE /* jenkins.hpp */,
 				BF5629CD17F52B5B00779261 /* config.hpp */,
 				B63743EBB2E8CC45B6EF7D65 /* main.cpp */,
 				BF5629C817F523AD00779261 /* tool.hpp */,
@@ -380,6 +382,7 @@
 				BF06C9A717FC7A50002F6A46 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
