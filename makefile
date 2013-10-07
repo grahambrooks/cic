@@ -3,16 +3,16 @@ SRC		= src
 TEST_SRC	= test
 BUILD		= build
 
-BOOST_LIB_PATH = /usr/local/lib
+LIB_PATH = /usr/local/lib
 #LT = dylib
 LT = a
 
-BOOST_LIBS	= \
-	$(BOOST_LIB_PATH)/libboost_filesystem-mt.$(LT) \
-	$(BOOST_LIB_PATH)/libboost_system-mt.$(LT) \
+LIBS	= \
+	$(LIB_PATH)/libboost_filesystem-mt.$(LT) \
+	$(LIB_PATH)/libboost_system-mt.$(LT) \
 	/usr/lib/libcurl.dylib
 
-TEST_LIBS	= $(BOOST_LIB_PATH)/libboost_unit_test_framework-mt.$(LT)
+TEST_LIBS	= $(LIB_PATH)/libboost_unit_test_framework-mt.$(LT)
 
 objects 	=
 
@@ -25,7 +25,7 @@ code :	$(objects) $(BUILD)/main.o
 	c++ $^ -o $@ $(LIBS)
 
 ci	:	$(SRC)/*.cpp $(SRC)/*.hpp
-	clang++ -g -O1 -o $@ -std=c++11 -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(BOOST_LIBS)
+	clang++ -g -O1 -o $@ -std=c++11 -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
 
 
 test: citest
@@ -49,11 +49,11 @@ clean:
 
 
 citest: $(objects) $(test_objects) $(BUILD)/test_main.o
-	c++ $^ -o $@ $(BOOST_LIBS) $(TEST_LIBS)
+	c++ $^ -o $@ $(LIBS) $(TEST_LIBS)
 
 $(BUILD)/%.o : $(TEST_SRC)/%.cpp
-	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I src/cpp -c $< -I$(SRC) -o $@
+	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I $(SRC) -I /usr/local/include -c $< -o $@
 
 $(BUILD)/%.o : $(SRC)/%.cpp $(SRC)/%.hpp
-	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I src/cpp:/usr/local/include -c $< -I/src/cpp -o $@
+	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I $(SRC) -I /usr/local/include -c $< -o $@
 
