@@ -6,6 +6,7 @@
 namespace ci {
     namespace HTTP {
         class client {
+        public:
             virtual std::string get(std::string url, std::string username, std::string password) = 0;
         };
         

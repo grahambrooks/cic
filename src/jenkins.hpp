@@ -7,25 +7,25 @@
 namespace ci {
     namespace servers {
         class jenkins {
-            HTTP::client _client;
-            config _config;
+            HTTP::client& _client;
+            config& _config;
         public:
-            jenkins(HTTP::client client, config config) : _client(client), _config(config) {}
+            jenkins(HTTP::client& client, config& config) : _client(client), _config(config) {}
             
             void summary() {
-                auto response = client.get(config.server_url + "/api/json", config.username, config.password);
+                auto response = _client.get(_config.server_url + "/api/json", _config.username, _config.password);
                 
-                parse_builds(response, config);
+                parse_builds(response, _config);
                 
-                for_each_build(response, [] (boost::property_tree::ptree::value_type& v){
+                for_each_build(response, [&] (boost::property_tree::ptree::value_type& v){
                     assert(v.first.empty());
                     
-                    print_build(v, c);
+                    print_build(v, _config);
                 });
 
             }
             
-            void for_each_build(std::string buffer, std::function<void (const boost::property_tree::ptree::value_type &)> f) {
+            void for_each_build(std::string buffer, std::function<void (boost::property_tree::ptree::value_type &)> f) {
                 boost::property_tree::ptree pt;
                 std::stringstream ss(buffer);
                 
