@@ -30,16 +30,21 @@ namespace ci {
             auto runtime_config = read_configuration(config_files);
 
             command_line_options_parser cmdline_parser;
-            runtime_config = runtime_config.merge(cmdline_parser.parse(argc, argv));
+            runtime_config = cmdline_parser.parse(argc, argv).merge(runtime_config);
 
-            if (!runtime_config.is_valid()) {
-                std::cerr << "Configuration not complete please check your .ci files" << std::endl;
-                return 1;
+            if (runtime_config.just_need_help()) {
+                cmdline_parser.show_help(std::cout);
             } else {
-                ci::HTTP::curl_client c;
-                ci::servers::jenkins server(c, runtime_config);
 
-                server.summary();
+                if (!runtime_config.is_valid()) {
+                    std::cerr << "Configuration not complete please check your .ci files" << std::endl;
+                    return 1;
+                } else {
+                    ci::HTTP::curl_client c;
+                    ci::servers::jenkins server(c, runtime_config);
+
+                    server.summary();
+                }
             }
 
             return 0;

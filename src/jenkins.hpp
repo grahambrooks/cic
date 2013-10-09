@@ -100,10 +100,6 @@ namespace ci {
                     
                     auto actions = last_build.get_child("actions");
                     
-                    auto second_only = [](const boost::property_tree::ptree::value_type &vt) -> void {
-                        std::cout << vt.first << ": " << vt.second.data() << std::endl;
-                    };
-                    
                     std::map<std::string, std::function<void (const boost::property_tree::ptree::value_type &)> > x = {
                         {
                             "shortDescription",
@@ -132,8 +128,7 @@ namespace ci {
                         
                     };
                     
-                    print_tree(actions, x,
-                               1);
+                    print_tree(actions, x, 1);
                 }
                 
             }

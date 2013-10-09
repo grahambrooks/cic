@@ -15,13 +15,16 @@ namespace ci {
         std::string username;
         std::string password;
         bool verbose;
+        bool help_only;
 
         config() {
             verbose = false;
+            help_only = false;
         }
 
         config(std::string server_type, std::string server_url, std::string username = "", std::string password = "") : server_type(server_type), server_url(server_url), username(username), password(password) {
             verbose = false;
+            help_only = false;
         }
 
         static ci::config from_string(const std::string config_text) {
@@ -68,6 +71,8 @@ namespace ci {
             server_url = server_url.empty() ? other.server_url : server_url;
             username = username.empty() ? other.username : username;
             password = password.empty() ? other.password : password;
+            verbose |= other.verbose;
+            help_only |= other.help_only;
 
             return *this;
         }
@@ -83,7 +88,14 @@ namespace ci {
         bool verbose_output() {
             return verbose;
         }
+
+        void set_help_only(){
+            help_only = true;
+        }
+
+        bool just_need_help() {return help_only;}
     };
+
 }
 
 
