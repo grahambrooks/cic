@@ -26,7 +26,7 @@ all	:	ci test
 ci	:	$(SRC)/*.cpp $(SRC)/*.hpp
 	clang++ -g -O1 -o $@ -std=c++11 -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
 
-citest: $(OBJECTS) $(TEST_OBJECTS) $(BUILD)/test_main.o
+citest: $(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 	c++ $^ -o $@ -std=c++11 -lc++ $(LIBS) $(TEST_LIBS)
 
 test: citest
@@ -50,7 +50,7 @@ clean:
 
 
 $(BUILD)/%.o : $(TEST_SRC)/%.cpp
-	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I $(SRC) -I /usr/local/include -c $< -o $@
+	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I $(SRC) -I /usr/local/include -D MAKEFILE_BUILD -c $< -o $@
 
 $(BUILD)/%.o : $(SRC)/%.cpp $(SRC)/%.hpp
 	clang++ -g -O1 -std=c++11 -Xclang "-stdlib=libc++" -I $(SRC) -I /usr/local/include -c $< -o $@

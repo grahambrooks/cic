@@ -43,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		18F062CDF6EC99533C814322 /* command_line_options_parser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = command_line_options_parser.hpp; sourceTree = "<group>"; };
 		4205D7FB17FF48C800C99FBE /* jenkins.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jenkins.hpp; sourceTree = "<group>"; };
 		4263660518044342004D9BE1 /* command_line_options_parser_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = command_line_options_parser_tests.cpp; path = test/command_line_options_parser_tests.cpp; sourceTree = SOURCE_ROOT; };
 		B6374101E15EDF5047B86487 /* ci.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ci.1; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 				BF5629C817F523AD00779261 /* tool.hpp */,
 				B6374101E15EDF5047B86487 /* ci.1 */,
 				B63747A93366CAD504846670 /* http.hpp */,
+				18F062CDF6EC99533C814322 /* command_line_options_parser.hpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
