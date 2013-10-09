@@ -10,6 +10,7 @@ LT = a
 LIBS	= \
 	$(LIB_PATH)/libboost_filesystem-mt.$(LT) \
 	$(LIB_PATH)/libboost_system-mt.$(LT) \
+	$(LIB_PATH)/libboost_program_options-mt.$(LT) \
 	/usr/lib/libcurl.dylib
 
 TEST_LIBS	= $(LIB_PATH)/libboost_unit_test_framework-mt.$(LT)

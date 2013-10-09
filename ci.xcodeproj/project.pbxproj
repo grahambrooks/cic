@@ -14,6 +14,8 @@
 		BF06C9AC17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */; };
 		BF06C9AF17FC7AF0002F6A46 /* ci_config_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF06C9AD17FC7AF0002F6A46 /* ci_config_test.cpp */; };
 		BF06C9B017FC7AF0002F6A46 /* test_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF06C9AE17FC7AF0002F6A46 /* test_main.cpp */; };
+		BF16165518050CD6009F8B70 /* libboost_program_options-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF16165418050CD6009F8B70 /* libboost_program_options-mt.a */; };
+		BF16165618050D0F009F8B70 /* libboost_program_options-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF16165418050CD6009F8B70 /* libboost_program_options-mt.a */; };
 		BF5629CF17F530D700779261 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5629CE17F530D700779261 /* libcurl.dylib */; };
 		BFD8408117F89E9000BA0DC4 /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5629C917F5266800779261 /* libboost_filesystem-mt.a */; };
 		BFD8408317F89EC600BA0DC4 /* libboost_system-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD8408217F89EC600BA0DC4 /* libboost_system-mt.a */; };
@@ -51,6 +53,7 @@
 		BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_unit_test_framework-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_unit_test_framework-mt.a"; sourceTree = "<group>"; };
 		BF06C9AD17FC7AF0002F6A46 /* ci_config_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ci_config_test.cpp; path = test/ci_config_test.cpp; sourceTree = SOURCE_ROOT; };
 		BF06C9AE17FC7AF0002F6A46 /* test_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test_main.cpp; path = test/test_main.cpp; sourceTree = SOURCE_ROOT; };
+		BF16165418050CD6009F8B70 /* libboost_program_options-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_program_options-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_program_options-mt.a"; sourceTree = "<group>"; };
 		BF5629C817F523AD00779261 /* tool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tool.hpp; sourceTree = "<group>"; };
 		BF5629C917F5266800779261 /* libboost_filesystem-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_filesystem-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_filesystem-mt.a"; sourceTree = "<group>"; };
 		BF5629CD17F52B5B00779261 /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF16165518050CD6009F8B70 /* libboost_program_options-mt.a in Frameworks */,
 				BFD8408317F89EC600BA0DC4 /* libboost_system-mt.a in Frameworks */,
 				BFD8408117F89E9000BA0DC4 /* libboost_filesystem-mt.a in Frameworks */,
 				BF5629CF17F530D700779261 /* libcurl.dylib in Frameworks */,
@@ -73,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF16165618050D0F009F8B70 /* libboost_program_options-mt.a in Frameworks */,
 				BF06C9AC17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a in Frameworks */,
 				BF06C9A917FC7AA4002F6A46 /* libboost_filesystem-mt.a in Frameworks */,
 				BF06C9AA17FC7AA4002F6A46 /* libboost_system-mt.a in Frameworks */,
@@ -85,6 +90,7 @@
 		B6374443B7259EF6A7DB80E8 = {
 			isa = PBXGroup;
 			children = (
+				BF16165418050CD6009F8B70 /* libboost_program_options-mt.a */,
 				BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */,
 				BFD8408217F89EC600BA0DC4 /* libboost_system-mt.a */,
 				BF5629CE17F530D700779261 /* libcurl.dylib */,
