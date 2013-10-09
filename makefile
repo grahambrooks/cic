@@ -17,7 +17,8 @@ TEST_LIBS	= $(LIB_PATH)/libboost_unit_test_framework-mt.$(LT)
 objects 	=
 
 
-test_objects	=	$(BUILD)/ci_config_test.o
+test_objects	=	$(BUILD)/ci_config_test.o	\
+			$(BUILD)/command_line_options_parser_tests.o
 
 all	:	ci test
 

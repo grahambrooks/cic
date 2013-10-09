@@ -14,7 +14,7 @@
 namespace ci {
     class tool {
     public:
-        int run() {
+        int run(int argc, char const *argv []) {
             std::cout << "ci v0.0.2 - continuous integration command line tool" << std::endl;
             
             boost::filesystem::path current_path = boost::filesystem::current_path();
