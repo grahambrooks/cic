@@ -15,10 +15,10 @@ LIBS	= \
 
 TEST_LIBS	= $(LIB_PATH)/libboost_unit_test_framework-mt.$(LT)
 
-objects 	=
+OBJECTS 	=
 
 
-test_objects	=	$(BUILD)/ci_config_test.o	\
+TEST_OBJECTS	=	$(BUILD)/ci_config_test.o	\
 			$(BUILD)/command_line_options_parser_tests.o
 
 all	:	ci test
@@ -26,7 +26,7 @@ all	:	ci test
 ci	:	$(SRC)/*.cpp $(SRC)/*.hpp
 	clang++ -g -O1 -o $@ -std=c++11 -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
 
-citest: $(objects) $(test_objects) $(BUILD)/test_main.o
+citest: $(OBJECTS) $(TEST_OBJECTS) $(BUILD)/test_main.o
 	c++ $^ -o $@ -std=c++11 -lc++ $(LIBS) $(TEST_LIBS)
 
 test: citest
