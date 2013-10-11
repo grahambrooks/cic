@@ -14,8 +14,8 @@ namespace ci {
         command_line_options_parser() {
             desc.add_options()
                     ("help", "display this option")
-                    ("verbose", "Verbose output")
-                    ("server", boost::program_options::value<std::string>(), "The CI server's address")
+                    ("verbose,v", "Verbose output")
+                    ("server,s", boost::program_options::value<std::string>(), "The CI server's address")
                     ("username,u", boost::program_options::value<std::string>(), "Username for authentication with the CI system.")
                     ("password,p", boost::program_options::value<std::string>(), "Basic authentication password used to access CI system");
         }
