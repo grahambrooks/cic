@@ -59,7 +59,7 @@ namespace ci {
         }
 
         void show_version(std::ostream &output) {
-            std::cout << "ci v0.0.2 - continuous integration command line tool" << std::endl;
+            std::cout << "ci v0.0.3 - continuous integration command line tool" << std::endl;
         }
 
         void show_help(std::ostream &output) {
