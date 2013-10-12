@@ -9,6 +9,9 @@ Basic usage ci --server http://jenkins.domain.com
 
 ci takes configuration parameters on the command line or configuration files places on the current path.
 
+
+Take a look at the [github pages](http://grahambrooks.github.io/ci/) for this project.
+
 Configuration
 -------------
 
