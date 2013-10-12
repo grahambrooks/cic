@@ -1,9 +1,13 @@
-ci
+ci - Continuous integration command tool
 ==
 
-Continuous integration command tool
+Practicing TDD and working with a Continuous Integration system is great but context switching between the command line
+to check the status of my builds is annoying - enter *ci* a tool for checking the status of your builds right in the
+command line.
 
-Practicing TDD and working with a Continuous Integration system is great but context switching between the command line to check the status of my builds is annoying - enter *ci* a tool for checking the status of your builds right in the command line.
+Basic usage ci --server http://jenkins.domain.com
+
+ci takes configuration parameters on the command line or configuration files places on the current path.
 
 Configuration
 -------------
