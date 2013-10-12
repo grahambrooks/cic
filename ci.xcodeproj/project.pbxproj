@@ -49,6 +49,7 @@
 		B6374101E15EDF5047B86487 /* ci.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ci.1; sourceTree = "<group>"; };
 		B63743EBB2E8CC45B6EF7D65 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B63747A93366CAD504846670 /* http.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = http.hpp; sourceTree = "<group>"; };
+		B6374C1420E94D9ED89D016C /* ansii_escape.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ansii_escape.hpp; sourceTree = "<group>"; };
 		B6374F0ED939BA60C20DFCDD /* ci */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ci; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF06C9A017FC7A50002F6A46 /* citest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = citest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF06C9AB17FC7AD6002F6A46 /* libboost_unit_test_framework-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_unit_test_framework-mt.a"; path = "../../../../usr/local/Cellar/boost/1.54.0/lib/libboost_unit_test_framework-mt.a"; sourceTree = "<group>"; };
@@ -121,6 +122,7 @@
 				B6374101E15EDF5047B86487 /* ci.1 */,
 				B63747A93366CAD504846670 /* http.hpp */,
 				18F062CDF6EC99533C814322 /* command_line_options_parser.hpp */,
+				B6374C1420E94D9ED89D016C /* ansii_escape.hpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
