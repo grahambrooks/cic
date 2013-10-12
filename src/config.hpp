@@ -16,6 +16,8 @@ namespace ci {
         std::string password;
         bool verbose;
         bool help_only;
+        bool version_only;
+
 
         config() {
             verbose = false;
@@ -94,6 +96,15 @@ namespace ci {
         }
 
         bool just_need_help() {return help_only;}
+
+        void set_version_only() {
+            version_only = true;
+        }
+
+        bool show_version_only() {
+            return version_only;
+        }
+
     };
 
 }
