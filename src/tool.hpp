@@ -40,8 +40,8 @@ namespace ci {
                     std::cerr << "Configuration not complete please check your .ci files" << std::endl;
                     return 1;
                 } else {
-                    ci::HTTP::curl_client c;
-                    ci::servers::jenkins server(c, runtime_config);
+                    ci::HTTP::curl_client http_client;
+                    ci::servers::jenkins server(http_client, runtime_config);
 
                     server.summary();
                 }

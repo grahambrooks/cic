@@ -3,27 +3,28 @@
 #include <curl/curl.h>
 #include <iostream>
 
+using namespace std;
 namespace ci {
     namespace HTTP {
         class client {
         public:
-            virtual std::string get(std::string url, std::string username, std::string password) = 0;
+            virtual string get(string url, string username, string password) = 0;
         };
         
         class curl_client : public client {
         private:
-            std::string collector;
+            string collector;
         public:
             
             static size_t callback(char *ptr, size_t size, size_t nmemb, void *userdata) {
                 curl_client *handler = static_cast<curl_client *>(userdata);
                 
-                handler->collector += std::string(ptr, size * nmemb);
+                handler->collector += string(ptr, size * nmemb);
                 return size * nmemb;
             }
             
             
-            std::string get(std::string url, std::string username = "", std::string password = "") {
+            string get(string url, string username = "", string password = "") {
                 collector.clear();
                 CURL *curl;
                 CURLcode res;
@@ -48,7 +49,6 @@ namespace ci {
                     }
                     
                     curl_easy_cleanup(curl);
-                    
                 }
                 
                 return collector;
