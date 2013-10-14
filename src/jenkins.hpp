@@ -91,7 +91,7 @@ namespace ci {
           print_build_summary = print_failed_build(build_colour, build_count, out);
         }
 
-        out << ANSI_ESCAPE::RESEET << endl;
+        out << ANSI_ESCAPE::RESET << endl;
 
         if (print_build_summary && c.verbose_output()) {
           print_failed_build_details(v, c, out);
