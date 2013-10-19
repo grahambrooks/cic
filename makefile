@@ -2,6 +2,7 @@
 SRC		= src
 TEST_SRC	= test
 BUILD		= build
+BUILD_NUMBER	?= dev
 
 LIB_PATH = /usr/local/lib
 #LT = dylib
@@ -24,7 +25,7 @@ TEST_OBJECTS	=	$(BUILD)/ci_config_test.o	\
 all	:	ci test
 
 ci	:	$(SRC)/*.cpp $(SRC)/*.hpp
-	clang++ -g -O1 -o $@ -std=c++11 -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
+	clang++ -g -O1 -o $@ -std=c++11 -D BUILD_NUMBER=$(BUILD_NUMBER) -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
 
 citest: $(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 	c++ $^ -o $@ -std=c++11 -lc++ $(LIBS) $(TEST_LIBS)
