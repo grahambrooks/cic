@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef BUILD_NUMBER
+#define BUILD_NUMBER "ide"
+#endif
+
 #include <boost/program_options.hpp>
 #include "config.hpp"
 
@@ -67,7 +71,7 @@ namespace ci {
     }
 
     void show_version(std::ostream &output) {
-      std::cout << "ci v0.0.3 - continuous integration command line tool" << std::endl;
+      std::cout << "ci v0.0." << BUILD_NUMBER << " - continuous integration command line tool" << std::endl;
     }
 
     void show_help(std::ostream &output) {
