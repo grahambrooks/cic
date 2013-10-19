@@ -24,10 +24,13 @@ TEST_OBJECTS	=	$(BUILD)/ci_config_test.o	\
 
 all	:	ci test
 
-ci	:	$(SRC)/*.cpp $(SRC)/*.hpp
+build	:
+	mkdir build
+
+ci	:	build $(SRC)/*.cpp $(SRC)/*.hpp
 	clang++ -g -O1 -o $@ -std=c++11 -D BUILD_NUMBER=$(BUILD_NUMBER) -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
 
-citest: $(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
+citest	:	$(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 	c++ $^ -o $@ -std=c++11 -lc++ $(LIBS) $(TEST_LIBS)
 
 test: citest
