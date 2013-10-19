@@ -49,6 +49,11 @@ dist:	ci citest
 	hdiutil convert tmp.dmg -format UDZO -o ci-install.dmg
 	-rm tmp.dmg
 
+ci-test: citest
+	./$^ --log_format=XML --log_sink=results.xml --log_level=all --report_level=no
+
+ci-build:	clean ci ci-test dist
+
 clean:
 	-rm ci
 	-rm citest
