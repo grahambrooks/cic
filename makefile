@@ -20,6 +20,7 @@ OBJECTS 	=
 
 
 TEST_OBJECTS	=	$(BUILD)/ci_config_test.o	\
+			$(BUILD)/job_test.o		\
 			$(BUILD)/command_line_options_parser_tests.o
 
 all	:	ci test

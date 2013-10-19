@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18F06F1BD77C850FC4CD171D /* job_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F06E9E9D7EAEBC7911055E /* job_test.cpp */; };
 		4263660618044342004D9BE1 /* command_line_options_parser_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4263660518044342004D9BE1 /* command_line_options_parser_tests.cpp */; };
 		B63747D01BE205ED45B42C3B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63743EBB2E8CC45B6EF7D65 /* main.cpp */; };
 		BF06C9A917FC7AA4002F6A46 /* libboost_filesystem-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5629C917F5266800779261 /* libboost_filesystem-mt.a */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		18F062CDF6EC99533C814322 /* command_line_options_parser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = command_line_options_parser.hpp; sourceTree = "<group>"; };
+		18F06E9E9D7EAEBC7911055E /* job_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = job_test.cpp; path = test/job_test.cpp; sourceTree = "<group>"; };
 		4205D7FB17FF48C800C99FBE /* jenkins.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jenkins.hpp; sourceTree = "<group>"; };
 		4263660518044342004D9BE1 /* command_line_options_parser_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = command_line_options_parser_tests.cpp; path = test/command_line_options_parser_tests.cpp; sourceTree = SOURCE_ROOT; };
 		B6374101E15EDF5047B86487 /* ci.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ci.1; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				BF06C9A117FC7A50002F6A46 /* citest */,
 				B63748E5B4DBF9BD109C159F /* Products */,
 				B63749C8C90FE85F504AFF16 /* src */,
+				18F06E9E9D7EAEBC7911055E /* job_test.cpp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,6 +219,7 @@
 				BF06C9AF17FC7AF0002F6A46 /* ci_config_test.cpp in Sources */,
 				4263660618044342004D9BE1 /* command_line_options_parser_tests.cpp in Sources */,
 				BF06C9B017FC7AF0002F6A46 /* test_main.cpp in Sources */,
+				18F06F1BD77C850FC4CD171D /* job_test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
