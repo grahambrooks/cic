@@ -32,7 +32,7 @@ citest: $(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 test: citest
 	./$^
 
-dist:
+dist:	ci citest
 	-rm ci-install.dmg
 	-rm -rf dist
 	mkdir dist
