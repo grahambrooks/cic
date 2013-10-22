@@ -2,7 +2,7 @@
 SRC		= src
 TEST_SRC	= test
 BUILD		= build
-BUILD_NUMBER	?= dev
+BUILD_NUMBER	?= '"dev"'
 
 LIB_PATH = /usr/local/lib
 #LT = dylib

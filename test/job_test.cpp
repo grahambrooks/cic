@@ -64,17 +64,17 @@ BOOST_AUTO_TEST_CASE(jobs_are_named) {
 
 BOOST_AUTO_TEST_CASE(jobs_have_artifacts) {
   ci::job job("foo");
-
+  
   BOOST_CHECK_EQUAL(job.get_artifacts().size(), 0);
 }
 
 BOOST_AUTO_TEST_CASE(jobs_have_properties) {
   ci::job job("foo");
   job.add()
-          ("shortDescription", "A job")
-          ("userId", "a user")
-          ("userName", "user name")
-          ("claimedBy", "me");
+    ("shortDescription", "A job")
+    ("userId", "a user")
+    ("userName", "user name")
+    ("claimedBy", "me");
 
   BOOST_CHECK_EQUAL(job.get("shortDescription"), "A job");
 }
