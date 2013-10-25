@@ -41,7 +41,6 @@ dist:	ci ci-test
 	-rm ci-install.dmg
 	-rm tmp.dmg
 	-rm -rf dist
-	-rm results.xml
 	mkdir dist
 	ln -s /usr/local/bin dist/bin
 	markdown README.md > dist/README.html
