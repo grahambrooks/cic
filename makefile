@@ -37,7 +37,7 @@ citest	:	$(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 test: citest
 	./$^
 
-dist:	ci citest
+dist:	ci ci-test
 	-rm ci-install.dmg
 	-rm tmp.dmg
 	-rm -rf dist
