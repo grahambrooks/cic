@@ -29,7 +29,7 @@ build	:
 	mkdir build
 
 ci	:	build $(SRC)/*.cpp $(SRC)/*.hpp
-	clang++ -g -O1 -o $@ -std=c++11 -D BUILD_NUMBER=$(BUILD_NUMBER) -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp $(LIBS)
+	clang++ -g -O1 -o $@ -std=c++11 -D BUILD_NUMBER=$(BUILD_NUMBER) -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp -I /usr/local/include $(LIBS)
 
 citest	:	$(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 	c++ $^ -o $@ -std=c++11 -lc++ $(LIBS) $(TEST_LIBS)
@@ -41,6 +41,7 @@ dist:	ci citest
 	-rm ci-install.dmg
 	-rm tmp.dmg
 	-rm -rf dist
+	-rm results.xml
 	mkdir dist
 	ln -s /usr/local/bin dist/bin
 	markdown README.md > dist/README.html
@@ -57,6 +58,7 @@ ci-build:	clean ci ci-test dist
 clean:
 	-rm ci
 	-rm citest
+	-rm results.xml
 	-rm -r dist
 	-rm -rf $(BUILD)/*
 
