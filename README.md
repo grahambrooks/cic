@@ -47,3 +47,7 @@ Hudson and Jenkins are currently supported server types.
 > ci
 </pre>
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/grahambrooks/ci/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
