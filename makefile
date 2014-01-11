@@ -1,4 +1,3 @@
-
 SRC		= src
 TEST_SRC	= test
 BUILD		= build
@@ -46,7 +45,7 @@ dist:	ci ci-test
 	markdown README.md > dist/README.html
 	cp ci dist
 	hdiutil create tmp.dmg -ov -volname "ci console" -fs HFS+ -srcfolder "dist" 
-	hdiutil convert tmp.dmg -format UDZO -o ci-install-0.0.A$(BUILD_NUMBER).dmg
+	hdiutil convert tmp.dmg -format UDZO -o ci-install-0.0.$(BUILD_NUMBER).dmg
 	-rm tmp.dmg
 
 ci-test: citest
