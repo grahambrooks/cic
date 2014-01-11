@@ -38,7 +38,7 @@ test: citest
 	./$^
 
 dist:	ci ci-test
-	-rm ci-install.dmg
+	-rm ci-install*.dmg
 	-rm tmp.dmg
 	-rm -rf dist
 	mkdir dist
@@ -46,7 +46,7 @@ dist:	ci ci-test
 	markdown README.md > dist/README.html
 	cp ci dist
 	hdiutil create tmp.dmg -ov -volname "ci console" -fs HFS+ -srcfolder "dist" 
-	hdiutil convert tmp.dmg -format UDZO -o ci-install.dmg
+	hdiutil convert tmp.dmg -format UDZO -o ci-install-0.0.A$(BUILD_NUMBER).dmg
 	-rm tmp.dmg
 
 ci-test: citest
