@@ -12,6 +12,8 @@ ci takes configuration parameters on the command line or configuration files pla
 
 Take a look at the [github pages](http://grahambrooks.github.io/ci/) for this project.
 
+OS-X Binaries are available here: http://download.umisiri.com/ci-console/
+
 Configuration
 -------------
 
