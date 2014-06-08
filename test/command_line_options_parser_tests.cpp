@@ -3,7 +3,7 @@
 #include "command_line_options_parser.hpp"
 
 BOOST_AUTO_TEST_CASE(recognises_verbose_output_option) {
-  ci::command_line_options_parser parser;
+  cic::command_line_options_parser parser;
   const char *argv[] = {"ci", "--verbose"};
   auto config = parser.parse(2, argv);
 
@@ -11,7 +11,7 @@ BOOST_AUTO_TEST_CASE(recognises_verbose_output_option) {
 }
 
 BOOST_AUTO_TEST_CASE(recognises_server_address_as_an_option) {
-  ci::command_line_options_parser parser;
+  cic::command_line_options_parser parser;
   const char *argv[] = {"ci", "--server=http://server.com/path"};
   auto config = parser.parse(2, argv);
 
@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE(recognises_server_address_as_an_option) {
 }
 
 BOOST_AUTO_TEST_CASE(recognises_username_as_an_option) {
-  ci::command_line_options_parser parser;
+  cic::command_line_options_parser parser;
   const char *argv[] = {"ci", "--username=graham"};
   auto config = parser.parse(2, argv);
 
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(recognises_username_as_an_option) {
 }
 
 BOOST_AUTO_TEST_CASE(recognises_username_short_option) {
-  ci::command_line_options_parser parser;
+  cic::command_line_options_parser parser;
   const char *argv[] = {"ci", "--u=graham"};
   auto config = parser.parse(2, argv);
 
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(recognises_username_short_option) {
 }
 
 BOOST_AUTO_TEST_CASE(recognises_password_as_an_option) {
-  ci::command_line_options_parser parser;
+  cic::command_line_options_parser parser;
   const char *argv[] = {"ci", "--password=passwd"};
   auto config = parser.parse(2, argv);
 
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(recognises_password_as_an_option) {
 }
 
 BOOST_AUTO_TEST_CASE(recognises_password_short_option) {
-  ci::command_line_options_parser parser;
+  cic::command_line_options_parser parser;
   const char *argv[] = {"ci", "--p=passwd"};
   auto config = parser.parse(2, argv);
 

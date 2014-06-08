@@ -1,7 +1,7 @@
 #include "tool.hpp"
 
 int main(int argc, const char *argv[]) {
-  ci::tool tool;
+  cic::tool tool;
 
   return tool.run(argc, argv);
 }

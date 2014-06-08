@@ -7,7 +7,7 @@
 #include <boost/program_options.hpp>
 #include "config.hpp"
 
-namespace ci {
+namespace cic {
   class command_line_options_parser {
     constexpr static auto username_option_name = "username";
     constexpr static auto server_uri_option_name = "server";
@@ -34,8 +34,8 @@ namespace ci {
           ("password,p", boost::program_options::value<std::string>(), "Basic authentication password used to access CI system");
     }
 
-    ci::config parse(int argc, const char *argv[]) {
-      ci::config result;
+    cic::config parse(int argc, const char *argv[]) {
+      cic::config result;
 
       boost::program_options::variables_map variables;
 

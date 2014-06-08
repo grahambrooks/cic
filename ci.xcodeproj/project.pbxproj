@@ -235,9 +235,9 @@
 					/usr/local/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
+					"\"$(inherited)\"",
 					/usr/local/include,
-					/usr/local/Cellar/boost/1.54.0/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -252,9 +252,9 @@
 					/usr/local/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
+					"\"$(inherited)\"",
 					/usr/local/include,
-					/usr/local/Cellar/boost/1.54.0/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -292,7 +292,9 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
@@ -335,7 +337,9 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;

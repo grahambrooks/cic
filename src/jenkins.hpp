@@ -1,4 +1,5 @@
 #pragma once
+
 #include "config.hpp"
 #include "http.hpp"
 #include <sstream>
@@ -6,12 +7,12 @@
 
 using namespace std;
 
-namespace ci {
+namespace cic {
   namespace servers {
 
     class jenkins {
       HTTP::client &http_client;
-      ci::config &config;
+      cic::config &config;
       stringstream dummy;
 
       struct build_count {
@@ -28,7 +29,7 @@ namespace ci {
       typedef boost::property_tree::ptree ptree;
       typedef function<void (ptree::value_type &)> tree_visitor_type;
 
-      jenkins(HTTP::client &http_client, ci::config &config) : http_client(http_client), config(config) {
+      jenkins(HTTP::client &http_client, cic::config &config) : http_client(http_client), config(config) {
       }
 
       int summary() {
@@ -39,10 +40,10 @@ namespace ci {
 
         ostream &out = output_stream();
 
-        for_each_build(response, [&] (ptree::value_type &v) {
-          assert(v.first.empty());
+        for_each_build(response, [&](ptree::value_type &v) {
+            assert(v.first.empty());
 
-          print_build(v, config, build_count, out);
+            print_build(v, config, build_count, out);
         });
 
         cout << endl
@@ -78,48 +79,49 @@ namespace ci {
         return pt;
       }
 
-      void print_build(ptree::value_type &v, ci::config &c, build_count &build_count, ostream &out) {
+      void print_build(ptree::value_type &v, cic::config &c, build_count &build_count, ostream &out) {
 
-        auto print_build_summary = false;
-        out << v.second.get < string >("name") << ": ";
+        out << v.second.get<string>("name") << ": ";
 
-        string build_colour = v.second.get < string >("color");
+        string build_colour = v.second.get<string>("color");
 
         if (is_successful_build(build_colour)) {
           print_successful_build(build_colour, build_count, out);
         } else {
-          print_build_summary = print_failed_build(build_colour, build_count, out);
+            print_failed_build(build_colour, build_count, out);
         }
 
         out << ANSI_ESCAPE::RESET << endl;
 
-        if (print_build_summary && c.verbose_output()) {
-          print_failed_build_details(v, c, out);
+        if (c.verbose_output()) {
+          if (has_been_built(build_colour)) {
+            print_failed_build_details(v, c, out);
+          }
         }
       }
 
-      void print_failed_build_details(ptree::value_type &failed_build_tree, ci::config &c, ostream &out) {
-        string failed_build_url = failed_build_tree.second.get < string >("url");
+      void print_failed_build_details(ptree::value_type &failed_build_tree, cic::config &c, ostream &out) {
+        string failed_build_url = failed_build_tree.second.get<string>("url");
 
         auto actions = get_failed_build_actions(c, failed_build_url);
 
         print_actions(out, actions);
       }
 
-      bool print_failed_build(string build_colour, build_count &build_count, ostream &out) {
-        bool print_build_summary;
+      void print_failed_build(string build_colour, build_count &build_count, ostream &out) {
         out << ANSI_ESCAPE::RED;
 
         if (is_building(build_colour)) {
           out << "fixing";
           build_count.fixing += 1;
         } else {
-          out << "broken";
-          build_count.failed += 1;
+          if (has_been_built(build_colour)) {
+            out << "broken";
+            build_count.failed += 1;
+          } else {
+            out << "not built";
+          }
         }
-
-        print_build_summary = true;
-        return print_build_summary;
       }
 
       void print_successful_build(string build_colour, build_count &build_count, ostream &out) {
@@ -142,7 +144,11 @@ namespace ci {
         return build_colour.find("anime") != string::npos;
       }
 
-      ptree get_json(string uri, ci::config config) {
+      bool has_been_built(string build_colour) {
+        return build_colour.find("notbuilt") == string::npos;
+      }
+
+      ptree get_json(string uri, cic::config config) {
 
         auto response = http_client.get(uri, config.username, config.password);
 
@@ -153,11 +159,13 @@ namespace ci {
         return tree;
       }
 
-      ptree get_failed_build_actions(ci::config &config, string failed_build_url) {
+      ptree get_failed_build_actions(cic::config &config, string failed_build_url) {
+
+        cerr << "Reading failed build " << failed_build_url << std::endl;
 
         auto job_tree = get_json(failed_build_url + "api/json?pretty=true", config);
 
-        auto last_build_url = job_tree.get < string >("lastBuild.url");
+        auto last_build_url = job_tree.get<string>("lastBuild.url");
 
         auto last_build = get_json(last_build_url + "api/json", config);
 
@@ -167,23 +175,23 @@ namespace ci {
       void print_actions(ostream &out, ptree &actions) {
         char const *indent = "   ";
         auto short_description = [&](const boost::property_tree::ptree::value_type &vt) -> void {
-          if (vt.second.data().length() > 0) {
-            out << indent << vt.second.data() << endl;
-          }
+            if (vt.second.data().length() > 0) {
+              out << indent << vt.second.data() << endl;
+            }
         };
         auto user_id = [&](const boost::property_tree::ptree::value_type &vt) -> void {
-          out << indent << "User Id: " << vt.second.data() << endl;
+            out << indent << "User Id: " << vt.second.data() << endl;
         };
 
         auto user_name = [&](const boost::property_tree::ptree::value_type &vt) -> void {
-          out << indent << "User : " << vt.second.data() << endl;
+            out << indent << "User : " << vt.second.data() << endl;
         };
 
         auto claimed_by = [&](const boost::property_tree::ptree::value_type &vt) -> void {
-          out << indent << "Claimed by: " << vt.second.data() << endl;
+            out << indent << "Claimed by: " << vt.second.data() << endl;
         };
 
-        map <string, tree_visitor_type> x = {
+        map<string, tree_visitor_type> x = {
             {"shortDescription", short_description},
             {"userId", user_id},
             {"userName", user_name},
@@ -195,7 +203,7 @@ namespace ci {
         out << endl;
       }
 
-      void print_tree(boost::property_tree::ptree &pt, ostream &out, map <string, tree_visitor_type> &x) {
+      void print_tree(boost::property_tree::ptree &pt, ostream &out, map<string, tree_visitor_type> &x) {
 
         for (auto v : pt) {
 

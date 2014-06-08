@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace ci {
+namespace cic {
   class config {
   private:
     bool verbose;
@@ -31,7 +31,7 @@ namespace ci {
       help_only = false;
     }
 
-    static ci::config from_string(const string config_text) {
+    static cic::config from_string(const string config_text) {
       stringstream ss(config_text);
 
       return load_from(ss);
@@ -42,14 +42,14 @@ namespace ci {
     }
 
 
-    static ci::config load(const boost::filesystem::path configuration_path) {
+    static cic::config load(const boost::filesystem::path configuration_path) {
       ifstream input(configuration_path.c_str());
 
       return load_from(input);
     }
 
-    static ci::config load_from(istream &ss) {
-      ci::config result;
+    static cic::config load_from(istream &ss) {
+      cic::config result;
       boost::property_tree::ptree pt;
       boost::property_tree::read_json(ss, pt);
 

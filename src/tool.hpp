@@ -12,7 +12,7 @@
 #include "command_line_options_parser.hpp"
 
 using namespace std;
-namespace ci {
+namespace cic {
   class tool {
   public:
     int run(int argc, char const *argv []) {
@@ -37,9 +37,9 @@ namespace ci {
           cmdline_parser.show_help(std::cout);
           return 1;
         } else {
-          ci::HTTP::curl_client http_client;
+          cic::HTTP::curl_client http_client;
 
-          ci::servers::jenkins server(http_client, runtime_config);
+          cic::servers::jenkins server(http_client, runtime_config);
 
           return server.summary();
         }

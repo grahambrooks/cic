@@ -4,7 +4,7 @@
 #include <iostream>
 
 using namespace std;
-namespace ci {
+namespace cic {
     namespace HTTP {
         class client {
         public:
