@@ -1,6 +1,7 @@
 .idea/
 build/
-ci
+cic
+cictest
 *.dmg
 dist/
 *dSYM/

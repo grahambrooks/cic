@@ -22,40 +22,40 @@ TEST_OBJECTS	=	$(BUILD)/ci_config_test.o	\
 			$(BUILD)/job_test.o		\
 			$(BUILD)/command_line_options_parser_tests.o
 
-all	:	ci test
+all	:	cic test
 
 build	:
 	mkdir build
 
-ci	:	build $(SRC)/*.cpp $(SRC)/*.hpp
+cic	:	build $(SRC)/*.cpp $(SRC)/*.hpp
 	clang++ -g -O1 -o $@ -std=c++11 -D BUILD_NUMBER=$(BUILD_NUMBER) -Xclang "-stdlib=libc++" -lc++ $(SRC)/*.cpp -I /usr/local/include $(LIBS)
 
-citest	:	$(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
+cictest	:	$(OBJECTS) $(TEST_OBJECTS)  $(BUILD)/test_main.o
 	c++ $^ -o $@ -std=c++11 -lc++ $(LIBS) $(TEST_LIBS)
 
-test: citest
+test: cictest
 	./$^
 
-dist:	ci ci-test
-	-rm ci-install*.dmg
+dist:	cic cic-test
+	-rm cic-install*.dmg
 	-rm tmp.dmg
 	-rm -rf dist
 	mkdir dist
 	ln -s /usr/local/bin dist/bin
 	markdown README.md > dist/README.html
-	cp ci dist
+	cp cic dist
 	hdiutil create tmp.dmg -ov -volname "ci console" -fs HFS+ -srcfolder "dist" 
-	hdiutil convert tmp.dmg -format UDZO -o ci-install-0.0.$(BUILD_NUMBER).dmg
+	hdiutil convert tmp.dmg -format UDZO -o cic-install-0.0.$(BUILD_NUMBER).dmg
 	-rm tmp.dmg
 
-ci-test: citest
+cic-test: cictest
 	./$^ --log_format=XML --log_sink=results.xml --log_level=all --report_level=no
 
-ci-build:	clean ci ci-test dist
+ci-build:	clean cic cic-test dist
 
 clean:
-	-rm ci
-	-rm citest
+	-rm cic
+	-rm cictest
 	-rm results.xml
 	-rm -r dist
 	-rm -rf $(BUILD)/*
