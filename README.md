@@ -1,25 +1,25 @@
-ci - Continuous integration command tool
+cic - Continuous integration console
 ==
 
 Practicing TDD and working with a Continuous Integration system is great but context switching between the command line
 to check the status of my builds is annoying - enter *ci* a tool for checking the status of your builds right in the
 command line.
 
-Basic usage ci --server http://jenkins.domain.com
+Basic usage cic --server http://jenkins.domain.com
 
-ci takes configuration parameters on the command line or configuration files places on the current path.
+cic takes configuration parameters on the command line or configuration files places on the current path.
 
 
-Take a look at the [github pages](http://grahambrooks.github.io/ci/) for this project.
+Take a look at the [github pages](http://grahambrooks.github.io/cic/) for this project.
 
 OS-X Binaries are available here: http://download.umisiri.com/ci-console/
 
 Configuration
 -------------
 
-ci uses a set of configuraiton files to know what to do. It assumes that you have some sort of project hierachy on your filesystem.
+cic uses a set of configuraiton files to know what to do. It assumes that you have some sort of project hierachy on your filesystem.
 
-ci assumes that you have a filesystem something like
+cic assumes that you have a filesystem something like
 
 <pre>
 
@@ -45,9 +45,7 @@ Assuming that project1 and project2 are built by the same ci system you will wan
 
 Hudson and Jenkins are currently supported server types.
 
-<pre>
-> ci
-</pre>
+	> cic
 
 
 
