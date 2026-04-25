@@ -1,0 +1,44 @@
+cic.example.toml
+  45f5b03f4f232391 1-35
+src/ui.rs
+  45f5b03f4f232391 1-196
+src/config.rs
+  45f5b03f4f232391 1-173
+src/app.rs
+  45f5b03f4f232391 1-62,64,66-68,70-92,94-96,98-126,129-136,138-154,156,158-176,179-209,211-233
+Cargo.toml
+  45f5b03f4f232391 1-31
+.gitignore
+  45f5b03f4f232391 1-3,6-8
+src/main.rs
+  45f5b03f4f232391 1-36,38-40,42-43,45-49,51-53,56-57,59-63,65-74,76,78,80-86,88-93,95-161,163,165-174
+src/providers/mod.rs
+  45f5b03f4f232391 1-18,20-30,34-45,47,49-57,59-62
+src/providers/github.rs
+  45f5b03f4f232391 1-6,8,10-11,13-23,25-50,52-55,57-64,66-69,71-75,77-81,83-88,90-102,104-108,110-130,132-196
+src/providers/jenkins.rs
+  45f5b03f4f232391 1-17,19-31,35-37,40-46,49-53,55-86,89-90,93-105
+README.md
+  45f5b03f4f232391 1-112,114,116-119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "ca41f1dcf9b6ffa2930abed86c3a2662b033c2a9",
+  "prompts": {
+    "45f5b03f4f232391": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "04a62157-2db4-4827-8f97-f6019c2e2d16",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Graham Brooks",
+      "messages": [],
+      "total_additions": 1529,
+      "total_deletions": 1815,
+      "accepted_lines": 1315,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/e795cc7eee7232fc7662d9561c135f2d4b0244b0e46aef297686dac8dfbd227b"
+    }
+  }
+}
