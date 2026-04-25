@@ -1,7 +1,8 @@
+/target
+Cargo.lock.bak
+.DS_Store
 .idea/
-build/
-cic
-cictest
 *.dmg
-dist/
-*dSYM/
+# Local config (may contain credentials); commit cic.example.toml instead.
+/cic.toml
+*~

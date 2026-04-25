@@ -1,0 +1,35 @@
+# Copy to ./cic.toml or ~/.config/cic/config.toml and edit.
+# Tokens may be inlined, but `${ENV_VAR}` references are expanded at startup.
+#
+# Two optional regexes per provider:
+#   match_project — applied to the project name (Jenkins job name, GitHub repo
+#                   "owner/name"). Filters which projects are scanned.
+#   match         — applied to the build name (Jenkins job name, GitHub
+#                   workflow run name). Filters within each project.
+# Both default to "match everything" when omitted.
+
+refresh_seconds = 30
+notifications   = true   # desktop notification when a project transitions to red
+
+# GitHub: combine an explicit `repos` list with discovery from `org` and/or
+# `user`. The combined set is deduped, then `match_project` filters it.
+[[providers]]
+type = "github"
+name = "my-repos"
+token = "${GITHUB_TOKEN}"
+repos = ["owner/repo-extra"]
+org = "my-company"
+# user = "grahambrooks"
+per_repo_limit = 10
+match_project = "^my-company/(api|web)-"
+match = "^(CI|Release)$"
+
+# Jenkins: project name == job name, so match_project and match both filter on
+# the job name (ANDed together).
+[[providers]]
+type = "jenkins"
+name = "company-jenkins"
+url = "https://jenkins.example.com"
+username = "${JENKINS_USER}"
+token = "${JENKINS_TOKEN}"
+match_project = "^team-alpha-"
