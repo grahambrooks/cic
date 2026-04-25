@@ -38,12 +38,18 @@ fn draw_header(f: &mut Frame, app: &App, area: Rect) {
         })
         .unwrap_or_else(|| "no data yet".to_string());
 
-    let refreshing = if app.refreshing { "  ·  refreshing" } else { "" };
+    let refreshing = if app.refreshing {
+        "  ·  refreshing"
+    } else {
+        ""
+    };
 
     let header = Line::from(vec![
         Span::styled(
             "cic",
-            Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
         ),
         Span::raw("  ·  "),
         Span::raw(last),
@@ -70,15 +76,17 @@ fn draw_grid(f: &mut Frame, app: &App, area: Rect) -> usize {
     let columns = (area.width / CARD_MIN_WIDTH).max(1) as usize;
     let total_rows = app.projects.len().div_ceil(columns);
 
-    let row_constraints: Vec<Constraint> =
-        (0..total_rows).map(|_| Constraint::Length(CARD_HEIGHT)).collect();
+    let row_constraints: Vec<Constraint> = (0..total_rows)
+        .map(|_| Constraint::Length(CARD_HEIGHT))
+        .collect();
     let row_areas = Layout::default()
         .direction(Direction::Vertical)
         .constraints(row_constraints)
         .split(area);
 
-    let col_constraints: Vec<Constraint> =
-        (0..columns).map(|_| Constraint::Ratio(1, columns as u32)).collect();
+    let col_constraints: Vec<Constraint> = (0..columns)
+        .map(|_| Constraint::Ratio(1, columns as u32))
+        .collect();
 
     for (row_idx, row_area) in row_areas.iter().enumerate() {
         let cell_areas = Layout::default()
@@ -88,7 +96,9 @@ fn draw_grid(f: &mut Frame, app: &App, area: Rect) -> usize {
 
         for (col_idx, cell_area) in cell_areas.iter().enumerate() {
             let project_idx = row_idx * columns + col_idx;
-            let Some(build) = app.projects.get(project_idx) else { break };
+            let Some(build) = app.projects.get(project_idx) else {
+                break;
+            };
             draw_card(f, *cell_area, build, project_idx == app.selected);
         }
     }
@@ -160,8 +170,7 @@ fn draw_footer(f: &mut Frame, app: &App, area: Rect) {
             .map(|e| Line::from(Span::styled(e.clone(), Style::default().fg(Color::Red))))
             .collect();
         f.render_widget(
-            Paragraph::new(lines)
-                .block(Block::default().borders(Borders::ALL).title(" errors ")),
+            Paragraph::new(lines).block(Block::default().borders(Borders::ALL).title(" errors ")),
             chunks[0],
         );
     }

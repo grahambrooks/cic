@@ -163,13 +163,17 @@ async fn run(terminal: &mut Term, mut app: App) -> Result<()> {
 }
 
 fn open_selected(app: &App) {
-    let Some(url) = app.selected_url().map(str::to_string) else { return };
+    let Some(url) = app.selected_url().map(str::to_string) else {
+        return;
+    };
     tokio::spawn(async move {
         #[cfg(target_os = "macos")]
         let _ = std::process::Command::new("open").arg(&url).status();
         #[cfg(target_os = "linux")]
         let _ = std::process::Command::new("xdg-open").arg(&url).status();
         #[cfg(target_os = "windows")]
-        let _ = std::process::Command::new("cmd").args(["/C", "start", &url]).status();
+        let _ = std::process::Command::new("cmd")
+            .args(["/C", "start", &url])
+            .status();
     });
 }

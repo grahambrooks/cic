@@ -134,9 +134,7 @@ impl GithubProvider {
     }
 
     async fn fetch_repo(&self, repo: &str, limit: usize) -> Result<Vec<Build>> {
-        let url = format!(
-            "https://api.github.com/repos/{repo}/actions/runs?per_page={limit}"
-        );
+        let url = format!("https://api.github.com/repos/{repo}/actions/runs?per_page={limit}");
         let body: RunsResponse = self
             .request(&url)
             .send()

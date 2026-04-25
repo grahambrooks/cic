@@ -105,7 +105,10 @@ impl App {
                     let name = p.name().to_string();
                     let outcome = match p.fetch_builds().await {
                         Ok(builds) => FetchOutcome::Ok { builds },
-                        Err(e) => FetchOutcome::Err { provider: name, error: format!("{e:#}") },
+                        Err(e) => FetchOutcome::Err {
+                            provider: name,
+                            error: format!("{e:#}"),
+                        },
                     };
                     let _ = tx.send(outcome);
                 }

@@ -18,7 +18,28 @@ to red.
 └────────────────────────────────┘ └────────────────────────────────┘
 ```
 
-## Build
+## Install
+
+### Homebrew (macOS / Linux)
+
+```sh
+brew tap grahambrooks/cic https://github.com/grahambrooks/cic.git
+brew install cic
+```
+
+The tap pulls the formula from `Formula/cic.rb` in this repository, which is
+auto-regenerated on every release.
+
+### Pre-built binaries
+
+Each release attaches archives for these targets to the GitHub release page:
+
+- `aarch64-apple-darwin` (macOS Apple Silicon, `.tar.gz`)
+- `x86_64-apple-darwin`  (macOS Intel, `.tar.gz`)
+- `x86_64-unknown-linux-gnu` (Linux x86_64, `.tar.gz`)
+- `x86_64-pc-windows-msvc`   (Windows x86_64, `.zip`)
+
+### From source
 
 ```sh
 cargo build --release
@@ -108,6 +129,24 @@ The grid auto-fits the terminal width — resize and the columns reflow.
 
 Logs are silenced by default. Set `CIC_LOG=info` (or any
 `tracing-subscriber` filter) to send logs to stderr.
+
+## Releasing
+
+Releases follow a CalVer scheme: `YYYY.M.D` (e.g. `2026.4.25`, no
+zero-padding). Pushing a matching tag triggers
+`.github/workflows/release.yml`, which:
+
+1. Builds binaries for the four supported targets.
+2. Packages each as a `.tar.gz` (or `.zip` on Windows) and attaches them to a
+   GitHub release.
+3. Regenerates `Formula/cic.rb` with the new version + sha256 values and
+   commits the change back to `master`.
+
+```sh
+ver=$(date +%Y.%-m.%-d)
+git tag "$ver"
+git push origin "$ver"
+```
 
 ## Status
 

@@ -28,7 +28,15 @@ impl JenkinsProvider {
         http: Client,
     ) -> Self {
         let base_url = base_url.trim_end_matches('/').to_string();
-        Self { name, base_url, username, token, pattern, project_pattern, http }
+        Self {
+            name,
+            base_url,
+            username,
+            token,
+            pattern,
+            project_pattern,
+            http,
+        }
     }
 }
 
@@ -78,7 +86,9 @@ impl Provider for JenkinsProvider {
                 name: j.name.clone(),
                 branch: None,
                 status: color_to_status(j.color.as_deref()),
-                url: j.url.unwrap_or_else(|| format!("{}/job/{}/", self.base_url, j.name)),
+                url: j
+                    .url
+                    .unwrap_or_else(|| format!("{}/job/{}/", self.base_url, j.name)),
             })
             .collect();
 
@@ -91,7 +101,9 @@ fn matches_opt(re: Option<&Regex>, value: &str) -> bool {
 }
 
 fn color_to_status(color: Option<&str>) -> BuildStatus {
-    let Some(c) = color else { return BuildStatus::Unknown };
+    let Some(c) = color else {
+        return BuildStatus::Unknown;
+    };
     let building = c.contains("anime");
     let base = c.split('_').next().unwrap_or(c);
     match (base, building) {
