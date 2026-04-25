@@ -1,0 +1,42 @@
+src/app.rs
+  45f5b03f4f232391 108-111
+src/config.rs
+  45f5b03f4f232391 80-81
+src/providers/github.rs
+  45f5b03f4f232391 137
+.github/workflows/release.yml
+  45f5b03f4f232391 1-173
+Formula/cic.rb
+  45f5b03f4f232391 1-35
+src/providers/jenkins.rs
+  45f5b03f4f232391 31-39,89-91,104-106
+src/ui.rs
+  45f5b03f4f232391 41-45,50-52,79-81,87-89,99-101,173
+.github/workflows/ci.yml
+  45f5b03f4f232391 1-34
+src/main.rs
+  45f5b03f4f232391 166-168,175-177
+README.md
+  45f5b03f4f232391 21-42,133-150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "3cc5446e7481b8a5bfc387aec1b7bb2b15446695",
+  "prompts": {
+    "45f5b03f4f232391": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "04a62157-2db4-4827-8f97-f6019c2e2d16",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Graham Brooks",
+      "messages": [],
+      "total_additions": 341,
+      "total_deletions": 34,
+      "accepted_lines": 328,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/c72977aaa0641bc188422cf488b9103e5e83d13fa5e65d3027e762dff93cbde1"
+    }
+  }
+}
