@@ -1,173 +1,199 @@
+# Standard release workflow for grahambrooks Rust tools (release-kit v2).
+#
+# This file and scripts/release.py are byte-identical in every repo; everything
+# repo-specific lives in .release.env. Re-sync with release-kit/stamp.sh.
+#
+# The tag is the version. Push a CalVer tag (vYYYY.M.N) — by hand, or let
+# auto-managed's monthly job create it — and this workflow:
+#   1. plans the build from .release.env and the tag,
+#   2. makes sure a GitHub Release exists for the tag (auto-managed creates one),
+#   3. stamps the tag's version into Cargo.toml and builds every target,
+#      uploading <bin>-<tag>-<target>.tar.gz (.zip on Windows) with the binaries
+#      at the archive root — the layout bx and Homebrew both expect,
+#   4. publishes SHA256SUMS, then opens and merges one PR that updates the in-repo
+#      Homebrew formula and bumps Cargo.toml to the released version,
+#   5. optionally publishes to crates.io (PUBLISH_CRATE=true), last, because it is
+#      the one step that cannot be undone.
+#
+# Re-run a tag (e.g. after fixing a runner problem): Actions → release → Run
+# workflow, with the tag. The tag must already contain this workflow.
 name: release
 
 on:
   push:
     tags:
-      # CalVer YYYY.M.D — e.g. 2026.4.25
-      - '[0-9]+.[0-9]+.[0-9]+'
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to build and publish (e.g. v2026.9.3)
+        required: true
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
 
 env:
   CARGO_TERM_COLOR: always
-  BIN: cic
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
+  plan:
+    name: plan
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.plan.outputs.version }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+      archive: ${{ steps.plan.outputs.archive }}
+      bins: ${{ steps.plan.outputs.bins }}
+      package: ${{ steps.plan.outputs.package }}
+      features: ${{ steps.plan.outputs.features }}
+      manifest_path: ${{ steps.plan.outputs.manifest_path }}
+      publish_crate: ${{ steps.plan.outputs.publish_crate }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - id: plan
+        env:
+          REPO_PRIVATE: ${{ github.event.repository.private }}
+        run: python3 scripts/release.py plan "$TAG"
+
+  release:
+    name: ensure github release
+    needs: plan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG already exists"
+          else
+            gh release create "$TAG" -R "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --generate-notes
+          fi
+
   build:
     name: build (${{ matrix.target }})
+    needs: [plan, release]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - target: aarch64-apple-darwin
-            os: macos-latest
-            archive: tar.gz
-          - target: x86_64-apple-darwin
-            os: macos-13
-            archive: tar.gz
-          - target: x86_64-unknown-linux-gnu
-            os: ubuntu-latest
-            archive: tar.gz
-          - target: x86_64-pc-windows-msvc
-            os: windows-latest
-            archive: zip
-    runs-on: ${{ matrix.os }}
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ matrix.target }}
-
-      - name: Build release binary
-        run: cargo build --release --target ${{ matrix.target }} --locked
-
-      - name: Package
-        id: pkg
-        shell: bash
-        env:
-          MATRIX_TARGET: ${{ matrix.target }}
-          MATRIX_ARCHIVE: ${{ matrix.archive }}
-        run: |
-          ver="${GITHUB_REF_NAME}"
-          stage="cic-${ver}-${MATRIX_TARGET}"
-          mkdir -p "dist/${stage}"
-          ext=""
-          if [[ "${MATRIX_TARGET}" == *windows* ]]; then ext=".exe"; fi
-          cp "target/${MATRIX_TARGET}/release/${BIN}${ext}" "dist/${stage}/"
-          cp README.md cic.example.toml "dist/${stage}/"
-          cd dist
-          if [[ "${MATRIX_ARCHIVE}" == "zip" ]]; then
-            7z a "${stage}.zip" "${stage}" >/dev/null
-            asset="${stage}.zip"
-          else
-            tar czf "${stage}.tar.gz" "${stage}"
-            asset="${stage}.tar.gz"
-          fi
-          echo "asset=dist/${asset}" >> "$GITHUB_OUTPUT"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v7
+          key: release-${{ matrix.target }}
+          workspaces: ${{ matrix.workspace }}
+      - name: Stamp version ${{ needs.plan.outputs.version }}
+        run: python3 scripts/release.py set-version "${{ needs.plan.outputs.version }}"
+      - name: Build, package, and upload
+        uses: taiki-e/upload-rust-binary-action@v1
         with:
-          name: cic-${{ matrix.target }}
-          path: ${{ steps.pkg.outputs.asset }}
-          if-no-files-found: error
+          bin: ${{ needs.plan.outputs.bins }}
+          package: ${{ needs.plan.outputs.package }}
+          features: ${{ needs.plan.outputs.features }}
+          manifest-path: ${{ needs.plan.outputs.manifest_path }}
+          target: ${{ matrix.target }}
+          archive: ${{ needs.plan.outputs.archive }}
+          tar: unix
+          zip: windows
+          ref: refs/tags/${{ env.TAG }}
+          token: ${{ github.token }}
 
-  release:
-    name: publish release
-    needs: build
+  finalize:
+    name: checksums + formula
+    needs: [plan, build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
-          ref: master
-          fetch-depth: 0
-
-      - uses: actions/download-artifact@v8
-        with:
-          path: artifacts
-          merge-multiple: true
-
-      - name: Compute checksums
-        id: sha
-        shell: bash
-        run: |
-          cd artifacts
-          ls -la
-          for f in *; do
-            sum=$(sha256sum "$f" | awk '{print $1}')
-            echo "$f  $sum"
-            stem="${f%.tar.gz}"
-            stem="${stem%.zip}"
-            target="${stem#cic-${GITHUB_REF_NAME}-}"
-            slug=$(printf '%s' "$target" | tr '.-' '__')
-            echo "sha_${slug}=${sum}" >> "$GITHUB_OUTPUT"
-          done
-
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: artifacts/*
-          fail_on_unmatched_files: true
-          generate_release_notes: true
-
-      - name: Regenerate Homebrew formula
+          ref: ${{ github.event.repository.default_branch }}
+      - name: Publish SHA256SUMS
         env:
-          VERSION: ${{ github.ref_name }}
-          REPO: ${{ github.repository }}
-          SHA_AARCH64_APPLE_DARWIN: ${{ steps.sha.outputs.sha_aarch64_apple_darwin }}
-          SHA_X86_64_APPLE_DARWIN: ${{ steps.sha.outputs.sha_x86_64_apple_darwin }}
-          SHA_X86_64_UNKNOWN_LINUX_GNU: ${{ steps.sha.outputs.sha_x86_64_unknown_linux_gnu }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p Formula
-          cat > Formula/cic.rb <<EOF
-          # Auto-generated by .github/workflows/release.yml. Do not edit by hand.
-          class Cic < Formula
-            desc "Terminal UI for monitoring CI builds across GitHub Actions and Jenkins"
-            homepage "https://github.com/${REPO}"
-            version "${VERSION}"
-            license "MIT"
-
-            on_macos do
-              on_arm do
-                url "https://github.com/${REPO}/releases/download/#{version}/cic-#{version}-aarch64-apple-darwin.tar.gz"
-                sha256 "${SHA_AARCH64_APPLE_DARWIN}"
-              end
-              on_intel do
-                url "https://github.com/${REPO}/releases/download/#{version}/cic-#{version}-x86_64-apple-darwin.tar.gz"
-                sha256 "${SHA_X86_64_APPLE_DARWIN}"
-              end
-            end
-
-            on_linux do
-              on_intel do
-                url "https://github.com/${REPO}/releases/download/#{version}/cic-#{version}-x86_64-unknown-linux-gnu.tar.gz"
-                sha256 "${SHA_X86_64_UNKNOWN_LINUX_GNU}"
-              end
-            end
-
-            def install
-              bin.install "cic"
-            end
-
-            test do
-              assert_match "Terminal UI", shell_output("#{bin}/cic --help")
-            end
-          end
-          EOF
-          cat Formula/cic.rb
-
-      - name: Commit formula update
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/dist"
+          gh release download "$TAG" -R "$GITHUB_REPOSITORY" -D "$RUNNER_TEMP/dist" -p '*.tar.gz' -p '*.zip'
+          python3 scripts/release.py sums "$RUNNER_TEMP/dist" > "$RUNNER_TEMP/SHA256SUMS"
+          cat "$RUNNER_TEMP/SHA256SUMS"
+          gh release upload "$TAG" -R "$GITHUB_REPOSITORY" "$RUNNER_TEMP/SHA256SUMS" --clobber
+      - name: Render formula and bump Cargo.toml
         run: |
-          git config user.name  "github-actions[bot]"
+          set -euo pipefail
+          python3 scripts/release.py formula "$TAG" "$RUNNER_TEMP/SHA256SUMS"
+          python3 scripts/release.py set-version "${{ needs.plan.outputs.version }}"
+      # The automation-guard ruleset only lets changes reach the default branch
+      # through a pull request; it asks for no approvals or checks, so opening and
+      # merging one satisfies it rather than working around it.
+      - name: Open and merge release PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Formula/cic.rb
+          git add -A
           if git diff --cached --quiet; then
-            echo "Formula already up to date"
+            echo "Formula and version already current"
             exit 0
           fi
-          git commit -m "Update Homebrew formula for ${GITHUB_REF_NAME}"
-          git push origin HEAD:master
+          branch="release/${TAG}"
+          title="Release ${TAG}: update Homebrew formula and version"
+          git checkout -b "$branch"
+          git commit -m "$title"
+          git push --force origin "$branch"
+          pr=$(gh pr list --head "$branch" --state open --json number -q '.[0].number // empty')
+          if [ -z "$pr" ]; then
+            pr=$(gh pr create --base "$BASE" --head "$branch" --title "$title" \
+                   --body "Generated by the release workflow from the published ${TAG} assets." \
+                 | awk -F/ '{print $NF}')
+          fi
+          if ! gh pr merge "$pr" --squash --delete-branch; then
+            state=$(gh pr view "$pr" --json state -q .state)
+            if [ "$state" != "MERGED" ]; then
+              echo "::error::release PR #${pr} could not be merged (state=${state})"
+              exit 1
+            fi
+          fi
+
+  publish-crate:
+    name: publish to crates.io
+    needs: [plan, finalize]
+    if: needs.plan.outputs.publish_crate == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Publish unless already published
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CARGO_REGISTRY_TOKEN}" ]; then
+            echo "::error::PUBLISH_CRATE=true but the CARGO_REGISTRY_TOKEN secret is not set"
+            exit 1
+          fi
+          python3 scripts/release.py set-version "${{ needs.plan.outputs.version }}"
+          python3 scripts/release.py publish-crate "${{ needs.plan.outputs.version }}"

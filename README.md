@@ -37,7 +37,11 @@ Each release attaches archives for these targets to the GitHub release page:
 - `aarch64-apple-darwin` (macOS Apple Silicon, `.tar.gz`)
 - `x86_64-apple-darwin`  (macOS Intel, `.tar.gz`)
 - `x86_64-unknown-linux-gnu` (Linux x86_64, `.tar.gz`)
+- `aarch64-unknown-linux-gnu` (Linux arm64, `.tar.gz`)
 - `x86_64-pc-windows-msvc`   (Windows x86_64, `.zip`)
+
+Archives are named `cic-<tag>-<target>` with the binary at the root, and a
+`SHA256SUMS` file lists their checksums.
 
 ### From source
 
@@ -132,20 +136,21 @@ Logs are silenced by default. Set `CIC_LOG=info` (or any
 
 ## Releasing
 
-Releases follow a CalVer scheme: `YYYY.M.D` (e.g. `2026.4.25`, no
-zero-padding). Pushing a matching tag triggers
-`.github/workflows/release.yml`, which:
+Releases follow a CalVer scheme: `vYYYY.M.N` (e.g. `v2026.9.1`, no
+zero-padding). The tag is the version. Pushing a matching tag triggers
+`.github/workflows/release.yml` (release-kit v2, configured by `.release.env`),
+which:
 
-1. Builds binaries for the four supported targets.
-2. Packages each as a `.tar.gz` (or `.zip` on Windows) and attaches them to a
-   GitHub release.
-3. Regenerates `Formula/cic.rb` with the new version + sha256 values and
-   commits the change back to `master`.
+1. Stamps the tag's version into `Cargo.toml` and builds binaries for the five
+   supported targets.
+2. Packages each as a `.tar.gz` (or `.zip` on Windows), attaches them to a
+   GitHub release, and publishes `SHA256SUMS`.
+3. Regenerates `Formula/cic.rb` and bumps `Cargo.toml` through a pull request
+   merged into `master`.
 
 ```sh
-ver=$(date +%Y.%-m.%-d)
-git tag "$ver"
-git push origin "$ver"
+git tag v2026.9.1
+git push origin v2026.9.1
 ```
 
 ## Status
