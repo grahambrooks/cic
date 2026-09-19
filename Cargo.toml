@@ -1,6 +1,6 @@
 [package]
 name = "cic"
-version = "0.1.0"
+version = "2026.9.0"
 edition = "2021"
 description = "Terminal UI for monitoring CI builds across GitHub Actions and Jenkins"
 license = "MIT"
