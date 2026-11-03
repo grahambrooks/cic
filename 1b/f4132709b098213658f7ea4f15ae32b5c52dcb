@@ -1,0 +1,31 @@
+.github/workflows/ci.yml
+  s_3af201839d09d6::t_6d0ce32af4b911 7-15,23-34,39,43,51-84
+Cargo.toml
+  s_3af201839d09d6::t_b5c903da334ee7 4-5
+rust-toolchain.toml
+  s_3af201839d09d6::t_449e8f1fd46200 1-4
+src/app.rs
+  s_3af201839d09d6::t_b2ae949307b29f 85
+src/config.rs
+  s_3af201839d09d6::t_391219f144571f 4,9
+src/main.rs
+  s_3af201839d09d6::t_a4b4718f3086d4 6,15,19,23
+src/ui.rs
+  s_3af201839d09d6::t_04032dbd502606 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1bf4132709b098213658f7ea4f15ae32b5c52dcb",
+  "prompts": {},
+  "sessions": {
+    "s_3af201839d09d6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ca62a504-f3e7-484c-9e2d-47cfc6cd0491",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Graham Brooks <graham@grahambrooks.com>"
+    }
+  }
+}
