@@ -82,11 +82,7 @@ impl App {
             Move::Up => cur.saturating_sub(cols),
             Move::Down => {
                 let next = cur + cols;
-                if next < len {
-                    next
-                } else {
-                    cur
-                }
+                if next < len { next } else { cur }
             }
         };
     }

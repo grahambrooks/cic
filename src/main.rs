@@ -3,7 +3,7 @@ mod config;
 mod providers;
 mod ui;
 
-use std::io::{stdout, Stdout};
+use std::io::{Stdout, stdout};
 use std::path::PathBuf;
 use std::time::{Duration, Instant};
 
@@ -12,15 +12,15 @@ use clap::Parser;
 use crossterm::event::{Event, EventStream, KeyCode, KeyEventKind, KeyModifiers};
 use crossterm::execute;
 use crossterm::terminal::{
-    disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
+    EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode,
 };
 use futures::StreamExt;
-use ratatui::backend::CrosstermBackend;
 use ratatui::Terminal;
+use ratatui::backend::CrosstermBackend;
 use tokio::sync::mpsc;
 use tokio::time::sleep;
 
-use crate::app::{drain_outcomes, App, FetchOutcome, Move};
+use crate::app::{App, FetchOutcome, Move, drain_outcomes};
 use crate::config::Config;
 
 #[derive(Parser, Debug)]

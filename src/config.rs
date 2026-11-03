@@ -1,12 +1,12 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use regex::Regex;
 use reqwest::Client;
 use serde::Deserialize;
 
-use crate::providers::{github::GithubProvider, jenkins::JenkinsProvider, Provider};
+use crate::providers::{Provider, github::GithubProvider, jenkins::JenkinsProvider};
 
 #[derive(Debug, Deserialize)]
 pub struct Config {

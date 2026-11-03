@@ -1,9 +1,9 @@
 use chrono::Utc;
+use ratatui::Frame;
 use ratatui::layout::{Constraint, Direction, Layout, Rect};
 use ratatui::style::{Color, Modifier, Style};
 use ratatui::text::{Line, Span};
 use ratatui::widgets::{Block, BorderType, Borders, Paragraph};
-use ratatui::Frame;
 
 use crate::app::App;
 use crate::providers::{Build, BuildStatus};
