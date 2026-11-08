@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
   schedule:
     - cron: "17 6 * * 1" # weekly, so new RustSec advisories surface without a push

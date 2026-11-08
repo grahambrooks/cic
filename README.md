@@ -146,7 +146,7 @@ which:
 2. Packages each as a `.tar.gz` (or `.zip` on Windows), attaches them to a
    GitHub release, and publishes `SHA256SUMS`.
 3. Regenerates `Formula/cic.rb` and bumps `Cargo.toml` through a pull request
-   merged into `master`.
+   merged into `main`.
 
 ```sh
 git tag v2026.9.1
