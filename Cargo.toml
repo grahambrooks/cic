@@ -2,7 +2,7 @@
 name = "cic"
 version = "2026.11.3"
 edition = "2024"
-rust-version = "1.99.1"
+rust-version = "1.100.0"
 description = "Terminal UI for monitoring CI builds across GitHub Actions and Jenkins"
 license = "MIT"
 
